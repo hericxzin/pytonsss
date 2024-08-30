@@ -1,7 +1,7 @@
- import os
+import os
 
 # Lista para armazenar as roupas
-tenis = [
+camisas = [
     {"nome": "Camisa Adidas 8", "tamanho": 42, "cor": "Preto/Branco", "ativo": True},
     {"nome": "Camisa Nike 8", "tamanho": 44, "cor": "Azul/Cinza", "ativo": False},
     {"nome": "Camisa Nike Elevate 3", "tamanho": 40, "cor": "Branco", "ativo": True}
@@ -9,7 +9,6 @@ tenis = [
 
 def exibir_nome_do_programa():
     print("""
-
 ░█████╗░██╗░░░░░░█████╗░████████╗██╗░░██╗███████╗░██████╗  ██████╗░░█████╗░
 ██╔══██╗██║░░░░░██╔══██╗╚══██╔══╝██║░░██║██╔════╝██╔════╝  ██╔══██╗██╔══██╗
 ██║░░╚═╝██║░░░░░██║░░██║░░░██║░░░███████║█████╗░░╚█████╗░  ██║░░██║██║░░██║
@@ -32,48 +31,49 @@ def mostra_escolhas():
     print("4. Sair")
 
 def escolhe_opcao():
-
     def exibir_subtitulo(texto):
         os.system("cls" if os.name == 'nt' else 'clear')
+        linha = '*' * 70
         print(texto)
-        print(" ")
+        print(linha)
+        print(linha)
+    
 
     def retorna_menu():
         input("Digite uma tecla para voltar ao menu principal ")
         main()
 
-    def cadastrar_tenis():
-        exibir_subtitulo("Cadastrar Novo Camisas")
-        nome_tenis = input("Digite o nome da camisa: ")
+    def cadastrar_camisa():
+        exibir_subtitulo("Cadastrar Nova Camisa")
+        nome_camisa = input("Digite o nome da camisa: ")
         tamanho = int(input("Digite o tamanho da camisa: "))
         cor = input("Digite a cor da camisa: ")
-        ativo = input("A camisa está ativo? (Sim/Não): ").strip().lower() == 'sim'
-        tenis.append({"nome": nome_tenis, "tamanho": tamanho, "cor": cor, "ativo": ativo})
-        print(f"O tênis {nome_tenis} foi cadastrado com sucesso\n")
-
+        ativo = input("A camisa está ativa? (Sim/Não): ").strip().lower() == 'sim'
+        camisas.append({"nome": nome_camisa, "tamanho": tamanho, "cor": cor, "ativo": ativo})
+        print(f"A camisa {nome_camisa} foi cadastrada com sucesso\n")
         retorna_menu()
 
-    def listar_tenis():
-        exibir_subtitulo("Lista de camisas Disponíveis")
-        if tenis:
-            for i, tenis_item in enumerate(tenis, start=1):
-                status = "Ativo" if tenis_item["ativo"] else "Inativo"
-                print(f"{i}. Nome: {tenis_item['nome']} | Tamanho: {tenis_item['tamanho']} | Cor: {tenis_item['cor']} | Status: {status}")
+    def listar_camisas():
+        exibir_subtitulo("Lista de Camisas Disponíveis")
+        if camisas:
+            for i, camisa_item in enumerate(camisas, start=1):
+                status = "Ativa" if camisa_item["ativo"] else "Inativa"
+                print(f"{i}. Nome: {camisa_item['nome']} | Tamanho: {camisa_item['tamanho']} | Cor: {camisa_item['cor']} | Status: {status}")
         else:
-            print("Nenhum tênis cadastrado.")
+            print("Nenhuma camisa cadastrada.")
         retorna_menu()
 
-    def ativar_desativar_tenis():
-        exibir_subtitulo("Ativar/Desativar Tênis")
-        listar_tenis()
-        if tenis:
+    def ativar_desativar_camisa():
+        exibir_subtitulo("Ativar/Desativar Camisa")
+        listar_camisas()
+        if camisas:
             try:
-                escolha = int(input("Digite o número do tênis para ativar/desativar: "))
-                if 1 <= escolha <= len(tenis):
-                    tenis_item = tenis[escolha - 1]
-                    tenis_item["ativo"] = not tenis_item["ativo"]
-                    status = "Ativo" if tenis_item["ativo"] else "Inativo"
-                    print(f"O tênis {tenis_item['nome']} agora está {status}.")
+                escolha = int(input("Digite o número da camisa para ativar/desativar: "))
+                if 1 <= escolha <= len(camisas):
+                    camisa_item = camisas[escolha - 1]
+                    camisa_item["ativo"] = not camisa_item["ativo"]
+                    status = "Ativa" if camisa_item["ativo"] else "Inativa"
+                    print(f"A camisa {camisa_item['nome']} agora está {status}.")
                 else:
                     print("Número inválido. Por favor, escolha um número da lista.")
             except ValueError:
@@ -87,17 +87,18 @@ def escolhe_opcao():
     def opcao_invalida():
         print("Opção inválida!")
         input("Aperte qualquer tecla para voltar")
-        main()  
+        main()
 
     try:
         opcao_escolhida = int(input("Escolha uma opção: "))
+        print(f"voce escolheu a opção{opcao_escolhida}")
 
         if opcao_escolhida == 1:
-            cadastrar_tenis()
+            cadastrar_camisa()
         elif opcao_escolhida == 2:
-            listar_tenis()
+            listar_camisas()
         elif opcao_escolhida == 3:
-            ativar_desativar_tenis()
+            ativar_desativar_camisa()
         elif opcao_escolhida == 4:
             finalizar_programa()
         else:

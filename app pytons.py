@@ -25,80 +25,77 @@ def exibir_nome_do_programa():
 """)
 
 def mostra_escolhas():
-    print("1. Cadastrar Nova camisa")
-    print("2. Listar camisas Disponíveis")
-    print("3. Ativar/Desativar camisas")
+    print("1. Cadastrar camisas")
+    print("2. Listar camisas")
+    print("3. Ativar estoque")
     print("4. Sair")
 
 def escolhe_opcao():
-    def exibir_subtitulo(texto):
-        os.system("cls" if os.name == 'nt' else 'clear')
-        linha = '*' * 70
-        print(texto)
-        print(linha)
-        print(linha)
     
-
+    def exibir_subtitulo(texto):
+        os.system('cls')
+        Linha =- len(texto)
+        print(Linha)
+        print(texto)
+        print('')
+    
     def retorna_menu():
-        input("Digite uma tecla para voltar ao menu principal ")
+        input('Digite uma tecla para voltar ao menu principal')
         main()
 
-    def cadastrar_camisa():
-        exibir_subtitulo("Cadastrar Nova Camisa")
-        nome_camisa = input("Digite o nome da camisa: ")
-        tamanho = int(input("Digite o tamanho da camisa: "))
-        cor = input("Digite a cor da camisa: ")
-        ativo = input("A camisa está ativa? (Sim/Não): ").strip().lower() == 'sim'
-        camisas.append({"nome": nome_camisa, "tamanho": tamanho, "cor": cor, "ativo": ativo})
-        print(f"A camisa {nome_camisa} foi cadastrada com sucesso\n")
+    def cadastrar_camisas():
+        exibir_subtitulo('Cadastrar Camisa')
+        
+        nome_camisa = input('Digite a marca da camisa:')
+        modelo_camisa = input('Digite o modelo:')
+        dados_da_camisa = {'nome': nome_camisa,  'modelo': modelo_camisa,  'ativo':True}
+        camisas.append(dados_da_camisa)
+        print(f'A camisa {nome_camisa} foi cadastrada com sucesso\n")
+        
         retorna_menu()
 
     def listar_camisas():
-        exibir_subtitulo("Lista de Camisas Disponíveis")
-        if camisas:
-            for i, camisa_item in enumerate(camisas, start=1):
-                status = "Ativa" if camisa_item["ativo"] else "Inativa"
-                print(f"{i}. Nome: {camisa_item['nome']} | Tamanho: {camisa_item['tamanho']} | Cor: {camisa_item['cor']} | Status: {status}")
-        else:
-            print("Nenhuma camisa cadastrada.")
+        exibir_subtitulo('Lista de Camisas Disponíveis')
+        for camisa in camisas:
+            nome_camisa = camisa['nome']
+            modelo_camisa = camisa['modelo']
+            ativo = 'Cadastrado' if ['camisas'] else  'Não cadastrado'
+            print(f' - {nome_camisa.ljust(20)} | {modelo_camisa.ljust(20)} | {ativo}')
         retorna_menu()
 
-    def ativar_desativar_camisa():
-        exibir_subtitulo("Ativar/Desativar Camisa")
-        listar_camisas()
-        if camisas:
-            try:
-                escolha = int(input("Digite o número da camisa para ativar/desativar: "))
-                if 1 <= escolha <= len(camisas):
-                    camisa_item = camisas[escolha - 1]
-                    camisa_item["ativo"] = not camisa_item["ativo"]
-                    status = "Ativa" if camisa_item["ativo"] else "Inativa"
-                    print(f"A camisa {camisa_item['nome']} agora está {status}.")
-                else:
-                    print("Número inválido. Por favor, escolha um número da lista.")
-            except ValueError:
-                print("Entrada inválida. Por favor, insira um número válido.")
+    def ativar_camisas():
+        exibir_subtitulo('Ativar camisa')
+        nome_camisa = input('Digite o nome da camisa que desaja ativar:')
+        camisa_encontrado = False
+
+        for camisa in camisas:
+            if nome_camisa == camisa('camisa'):
+                camisa_encontrado = True
+                camisa['camisa'] = not camisa['camisa']
+                mensagem = f'A matricula de {nome_camisa} foi ativado com suceso' if camisa['ativo'] else f'A matricula {nome_camisa} foi desativado'
+                print(mensagem)
+        if not camisa_encontrado:
+            print('Não encontrado')
         retorna_menu()
 
     def finalizar_programa():
-        os.system("cls" if os.name == 'nt' else 'clear')
-        print("Finalizando o programa\n")
+        os.system('cls')
+        print('Finalizando o programa\n')
 
     def opcao_invalida():
-        print("Opção inválida!")
-        input("Aperte qualquer tecla para voltar")
+        print('Essa opção não é válida\n')
+        input('Aperte qualquer tecla para voltar')
         main()
 
     try:
         opcao_escolhida = int(input("Escolha uma opção: "))
-        print(f"voce escolheu a opção{opcao_escolhida}")
 
         if opcao_escolhida == 1:
-            cadastrar_camisa()
+            cadastra_camisas()
         elif opcao_escolhida == 2:
             listar_camisas()
         elif opcao_escolhida == 3:
-            ativar_desativar_camisa()
+            ativar_camisas()
         elif opcao_escolhida == 4:
             finalizar_programa()
         else:
@@ -107,10 +104,9 @@ def escolhe_opcao():
         opcao_invalida()
 
 def main():
-    exibir_nome_do_programa()
+    mostra_titulo()
     mostra_escolhas()
     escolhe_opcao()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
-
